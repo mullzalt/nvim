@@ -33,6 +33,8 @@ return {
         "tailwindcss",
         "svelte",
         "lua_ls",
+        "solargraph",
+        "texlab",
         "graphql",
         "emmet_ls",
         "prismals",
@@ -45,7 +47,7 @@ return {
     mason_tool_installer.setup({
       ensure_installed = {
         "prettier", -- prettier formatter
-        "stylua", -- lua formatter
+        "stylua",   -- lua formatter
         "eslint_d", -- js linter
       },
     })
