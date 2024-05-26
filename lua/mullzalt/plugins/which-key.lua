@@ -7,8 +7,10 @@ return {
   end,
   opts = {
     defaults = {
-      ["<leader>f"] = {name = "+  Find Files"},
-      ["<leader>h"] = {name = "+  Harpoon"},
+      ["<leader>f"] = {name = "+  Find Files"},
+      ["<leader>h"] = {name = "+  Harpoon"},
+      ["<leader>t"] = {name = "+  Troubles"},
+      ["<leader>w"] = {name = "+ 󰖶 Toggle Wrap"},
     }
   },
   config = function(_, opts)

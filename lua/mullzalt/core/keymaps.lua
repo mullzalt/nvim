@@ -32,12 +32,11 @@ vim.keymap.set({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { expr = true,
 
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
-vim.keymap.set("x", "<leader>p", [["_dP]])
 vim.keymap.set({"n", "v"}, "x", '"_x')
 
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank selected to clipboard"})
+vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank current line to clipboard"})
 
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
