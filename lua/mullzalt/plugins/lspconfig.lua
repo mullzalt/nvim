@@ -94,6 +94,24 @@ return {
 					capabilities = capabilities,
 				})
 			end,
+			["solargraph"] = function()
+				lspconfig["solargraph"].setup({
+					capabilities = capabilities,
+					filetypes = { "ruby" },
+					root_dir = lspconfig.util.root_pattern("Gemfile", ".git", "."),
+					settings = {
+						solargraph = {
+							autoformat = true,
+							completion = true,
+							diagnostic = true,
+							folding = true,
+							references = true,
+							rename = true,
+							symbols = true,
+						},
+					},
+				})
+			end,
 			["svelte"] = function()
 				-- configure svelte server
 				lspconfig["svelte"].setup({

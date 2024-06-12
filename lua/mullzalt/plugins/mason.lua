@@ -28,6 +28,7 @@ return {
 			-- list of servers for mason to install
 			ensure_installed = {
 				"tsserver",
+				"phpactor",
 				"html",
 				"cssls",
 				"tailwindcss",
@@ -44,6 +45,8 @@ return {
 
 		mason_tool_installer.setup({
 			ensure_installed = {
+				"php-cs-fixer",
+				"phpcs",
 				"prettier", -- prettier formatter
 				"stylua", -- lua formatter
 				"isort", -- python formatter
