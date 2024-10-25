@@ -48,28 +48,19 @@ return {
 				keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 
 				opts.desc = "Show buffer diagnostics"
-				keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+				keymap.set("n", "<leader>T", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
 
 				opts.desc = "Show line diagnostics"
-				keymap.set("n", "<leader>df", vim.diagnostic.open_float, opts) -- show diagnostics for line
+				keymap.set("n", "<leader>t", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
 				opts.desc = "Go to previous diagnostic"
 				keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
 
-				opts.desc = "Go to previous diagnostic"
-				keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
-
 				opts.desc = "Go to next diagnostic"
 				keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
-				opts.desc = "Go to next diagnostic"
-				keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
-
 				opts.desc = "Show documentation for what is under cursor"
 				keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
-
-				opts.desc = "Show documentation for what is under cursor"
-				keymap.set("n", "<S-Up>", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
 				opts.desc = "Restart LSP"
 				keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
@@ -94,22 +85,14 @@ return {
 					capabilities = capabilities,
 				})
 			end,
-			["solargraph"] = function()
-				lspconfig["solargraph"].setup({
+			["intelephense"] = function()
+				lspconfig["intelephense"].setup({
 					capabilities = capabilities,
-					filetypes = { "ruby" },
-					root_dir = lspconfig.util.root_pattern("Gemfile", ".git", "."),
-					settings = {
-						solargraph = {
-							autoformat = true,
-							completion = true,
-							diagnostic = true,
-							folding = true,
-							references = true,
-							rename = true,
-							symbols = true,
-						},
-					},
+					cmd = { "intelephense", "--stdio" },
+					filetype = { "php" },
+					root_dir = function(fname)
+						return vim.loop.cwd()
+					end,
 				})
 			end,
 			["svelte"] = function()

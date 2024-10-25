@@ -27,32 +27,24 @@ return {
 		mason_lspconfig.setup({
 			-- list of servers for mason to install
 			ensure_installed = {
-				"tsserver",
-				"phpactor",
+				"ts_ls",
 				"html",
 				"cssls",
 				"tailwindcss",
 				"solargraph",
-				"svelte",
 				"lua_ls",
-				"graphql",
 				"emmet_ls",
 				"prismals",
-				"pyright",
-				"texlab",
+				"intelephense", -- php lsp
 			},
 		})
 
 		mason_tool_installer.setup({
 			ensure_installed = {
-				"php-cs-fixer",
-				"phpcs",
-				"prettier", -- prettier formatter
-				"stylua", -- lua formatter
-				"isort", -- python formatter
-				"black", -- python formatter
-				"pylint",
+				"prettier",
+				"stylua",
 				"eslint_d",
+				"php-cs-fixer",
 			},
 		})
 	end,
