@@ -19,7 +19,7 @@ vim.opt.termguicolors = true
 vim.opt.background = "dark"
 
 -- vim.opt.colorcolumn = "80"
--- vim.opt.signcolumn = "yes:1"
+vim.opt.signcolumn = "yes:1"
 
 vim.opt.backspace = "indent,eol,start"
 
