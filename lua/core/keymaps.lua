@@ -50,12 +50,18 @@ vim.keymap.set("v", "<", "<gv", { desc = "Dedent", silent = true })
 -- nohl
 vim.keymap.set("n", "<Esc>", "<cmd>:nohlsearch<cr>")
 
--- Copy relative path of current file to clipboard
-vim.keymap.set("n", "<leader>fyp", function()
+-- Copy path
+vim.keymap.set("n", "<leader>cp", function()
 	local path = vim.fn.expand("%")
 	vim.fn.setreg("+", path)
 	vim.notify("Copied: " .. path)
-end, { desc = "Copy File Path" })
+end, { desc = "Copy Relative Path" })
+
+vim.keymap.set("n", "<leader>cP", function()
+	local path = vim.fn.expand("%:p")
+	vim.fn.setreg("+", path)
+	vim.notify("Copied: " .. path)
+end, { desc = "Copy Absolute Path" })
 
 -- Marks: mm/mM to set (built-in), mj/mJ to jump, ' unified with `
 vim.keymap.set({ "n", "x", "o" }, "'", "`", { remap = true })
