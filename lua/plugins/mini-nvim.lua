@@ -1,3 +1,7 @@
+local function get_relative_cwd()
+	return vim.fn.expand("%:.")
+end
+
 return {
 	{
 		"nvim-mini/mini.ai",
@@ -62,14 +66,48 @@ return {
 		config = function()
 			local statusline = require("mini.statusline")
 
-			statusline.setup()
+			statusline.setup({
+				content = {
+					active = function()
+						local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
+						local git = MiniStatusline.section_git({ trunc_width = 40 })
+						local diff = MiniStatusline.section_diff({ trunc_width = 75 })
+						local lsp = MiniStatusline.section_lsp({ trunc_width = 75 })
+						local diagnostics = statusline.section_diagnostics({
+							trunc_width = 75,
+							signs = {
+								ERROR = "",
+								WARN = "",
+								HINT = "",
+								INFO = "",
+							},
+						})
+
+						MiniStatusline.section_filename({ trunc_width = 140 })
+						local fileinfo = MiniStatusline.section_fileinfo({ trunc_width = 120 })
+						local location = MiniStatusline.section_location({ trunc_width = 75 })
+						local search = MiniStatusline.section_searchcount({ trunc_width = 75 })
+
+						return statusline.combine_groups({
+							{ hl = mode_hl, strings = { string.upper(mode) } },
+							{ hl = "MiniStatuslineDevinfo", strings = { git, diff } },
+							"%<",
+							{ hl = "MiniStatuslineDevinfo", strings = { lsp, diagnostics } },
+							"%=", -- End left alignment
+							{ hl = "MiniStatuslineFilename", strings = { get_relative_cwd() } },
+							{ hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
+							{ hl = mode_hl, strings = { search, location } },
+						})
+					end,
+				},
+			})
 		end,
 	},
 	{
 		"nvim-mini/mini.snippets",
 		version = false,
 		config = function()
-			require("mini.snippets").setup({})
+			require("mini.snippets").setup()
 		end,
 	},
 	{
@@ -146,6 +184,7 @@ return {
 					-- Enhance this by adding descriptions for <Leader> mapping groups
 					{ mode = { "n", "x" }, keys = "<leader>f", desc = "Find" },
 					{ mode = { "n", "x" }, keys = "<leader>w", desc = "Wrapping" },
+					{ mode = { "n", "x" }, keys = "<leader>c", desc = "Code" },
 					miniclue.gen_clues.square_brackets(),
 					miniclue.gen_clues.builtin_completion(),
 					miniclue.gen_clues.g(),

@@ -1,7 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-
 -- move line in visual mode
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selected line down", expr = true, silent = true })
 vim.keymap.set("v", "<S-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selected line down", expr = true, silent = true })
@@ -53,3 +52,10 @@ vim.keymap.set("v", "<", "<gv", { desc = "- indent", silent = true })
 
 -- nohl
 vim.keymap.set("n", "<Esc>", "<cmd>:nohlsearch<cr>")
+
+-- Copy relative path of current file to clipboard
+vim.keymap.set("n", "<leader>fyp", function()
+	local path = vim.fn.expand("%")
+	vim.fn.setreg("+", path)
+	vim.notify("Copied: " .. path)
+end, { desc = "Copy relative file (P)ath" })

@@ -23,6 +23,8 @@ vim.opt.signcolumn = "yes:1"
 
 vim.opt.backspace = "indent,eol,start"
 
+vim.opt.autoread = true
+vim.opt.updatetime = 1000
 vim.opt.swapfile = false
 
 vim.opt.scrolloff = 8

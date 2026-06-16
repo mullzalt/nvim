@@ -16,11 +16,18 @@ return {
 				"emmet_ls",
 				"lua_ls",
 				"jsonls",
-				"markdown",
+				"markdownlint-cli2",
+				"markdown-toc",
+				"phpstan",
+
+				"tinymist",
+				"typos_lsp",
+				"prettypst",
 
 				"eslint",
 				"prettier",
 				"stylua",
+				"php-cs-fixer",
 			},
 		},
 	},
@@ -139,6 +146,7 @@ return {
 
 			lspconfig.html.setup({
 				capabilities = capabilities,
+				filetypes = { "html", "blade" },
 			})
 
 			lspconfig.cssls.setup({
@@ -155,6 +163,39 @@ return {
 					"typescriptreact",
 				},
 			})
+
+			lspconfig.marksman.setup({
+				capabilities = capabilities,
+			})
+
+			lspconfig.tinymist.setup({
+				capabilities = capabilities,
+			})
+
+			lspconfig.blade_formatter.setup({
+				capabilities = capabilities,
+				filetypes = {
+					"blade",
+				},
+			})
+
+			lspconfig.phpstan.setup({
+				cmd = {
+					"vendor/bin/phpstan",
+					"analyse",
+					"--error-format=json",
+					"--no-progress",
+				},
+				filetypes = { "php" },
+				root_dir = lspconfig.util.root_pattern("composer.json", "phpstan.neon", ".git"),
+			})
+
+			lspconfig.intelephense.setup({
+				capabilities = capabilities,
+				filetypes = {
+					"php",
+				},
+			})
 		end,
 	},
 
@@ -167,8 +208,40 @@ return {
 					timeout_ms = 1000,
 					lsp_fallback = false,
 				},
+				formatters = {
+					["markdown-toc"] = {
+						condition = function(_, ctx)
+							for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
+								if line:find("<!%-%- toc %-%->") then
+									return true
+								end
+							end
+						end,
+					},
+					["markdownlint-cli2"] = {
+						condition = function(_, ctx)
+							local diag = vim.tbl_filter(function(d)
+								return d.source == "markdownlint"
+							end, vim.diagnostic.get(ctx.buf))
+							return #diag > 0
+						end,
+					},
+					["php-cs-fixer"] = {
+						command = "php-cs-fixer",
+						args = {
+							"fix",
+							"--rules=@PSR12", -- Formatting preset. Other presets are available, see the php-cs-fixer docs.
+							"$FILENAME",
+						},
+						stdin = false,
+					},
+				},
 				formatters_by_ft = {
+					["markdown"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
+					["markdown.mdx"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
 					lua = { "stylua" },
+					blade = { "blade-formatter" },
+					php = { "php-cs-fixer" },
 
 					javascript = { "prettier" },
 					javascriptreact = { "prettier" },
