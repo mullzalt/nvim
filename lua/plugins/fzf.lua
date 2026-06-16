@@ -15,7 +15,7 @@ return {
 			function()
 				require("fzf-lua").live_grep()
 			end,
-			desc = "Find Grep",
+			desc = "Find by Grep",
 		},
 		{
 			"<leader>fc",
@@ -43,42 +43,42 @@ return {
 			function()
 				require("fzf-lua").buffers()
 			end,
-			desc = "Find existing Buffers",
+			desc = "Find Buffers",
 		},
 		{
 			"<leader>fB",
 			function()
 				require("fzf-lua").builtin()
 			end,
-			desc = "Find Builtin FZF",
+			desc = "Find Builtin",
 		},
 		{
 			"<leader>fw",
 			function()
 				require("fzf-lua").grep_cword()
 			end,
-			desc = "Find current Word",
+			desc = "Find Word",
 		},
 		{
 			"<leader>fW",
 			function()
 				require("fzf-lua").grep_cWORD()
 			end,
-			desc = "Find current WORD",
+			desc = "Find WORD",
 		},
 		{
 			"<leader>fd",
 			function()
 				require("fzf-lua").diagnostics_document()
 			end,
-			desc = "Find Diagnostics in current Document",
+			desc = "Find Document Diagnostics",
 		},
 		{
 			"<leader>fD",
 			function()
 				require("fzf-lua").diagnostics_workspace()
 			end,
-			desc = "Find Diagnostics in Workspace",
+			desc = "Find Workspace Diagnostics",
 		},
 		{
 			"<leader>fr",
@@ -99,7 +99,14 @@ return {
 			function()
 				require("fzf-lua").lgrep_curbuf()
 			end,
-			desc = "Find grep the current buffer",
+			desc = "Find in Buffer",
+		},
+		{
+			"<leader>fm",
+			function()
+				require("fzf-lua").marks()
+			end,
+			desc = "Find Marks",
 		},
 	},
 }

@@ -2,24 +2,24 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- move line in visual mode
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selected line down", expr = true, silent = true })
-vim.keymap.set("v", "<S-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selected line down", expr = true, silent = true })
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selected line up", expr = true, silent = true })
-vim.keymap.set("v", "<S-Up>", ":m '<-2<CR>gv=gv", { desc = "Move selected line up", expr = true, silent = true })
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move Line Down", silent = true })
+vim.keymap.set("v", "<S-Down>", ":m '>+1<CR>gv=gv", { desc = "Move Line Down", silent = true })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move Line Up", silent = true })
+vim.keymap.set("v", "<S-Up>", ":m '<-2<CR>gv=gv", { desc = "Move Line Up", silent = true })
 
 -- join line
-vim.keymap.set("n", "J", "mzJ`z", { desc = "Join line", silent = true })
-vim.keymap.set("n", "<S-Down>", "mzJ`z", { desc = "Join line", silent = true })
+vim.keymap.set("n", "J", "mzJ`z", { desc = "Join Line", silent = true })
+vim.keymap.set("n", "<S-Down>", "mzJ`z", { desc = "Join Line", silent = true })
 
 -- better scroll
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll half page down", silent = true })
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll half page up", silent = true })
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll Down", silent = true })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll Up", silent = true })
 
-vim.keymap.set("n", "n", "nzzzv", { desc = "Find next matching patern", silent = true })
-vim.keymap.set("n", "N", "Nzzzv", { desc = "Find previous matching patern", silent = true })
+vim.keymap.set("n", "n", "nzzzv", { desc = "Find Next", silent = true })
+vim.keymap.set("n", "N", "Nzzzv", { desc = "Find Previous", silent = true })
 
 -- toggle wrap
-vim.keymap.set("n", "<leader>ww", "<cmd>set wrap!<cr>", { desc = "Toggle text wrap", remap = true })
+vim.keymap.set("n", "<leader>ww", "<cmd>set wrap!<cr>", { desc = "Toggle Wrap", remap = true })
 
 -- better up/down
 vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -27,28 +27,25 @@ vim.keymap.set({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { expr = tru
 vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
--- greatest remap ever
-vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste Without Yank" })
 vim.keymap.set({ "n", "v" }, "x", '"_x')
 
--- next greatest remap ever : asbjornHaland
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank selected to clipboard" })
-vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank current line to clipboard" })
-vim.keymap.set("n", "Y", "yy", { desc = "Yank current line" })
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to Clipboard" })
+vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank Line to Clipboard" })
+vim.keymap.set("n", "Y", "yy", { desc = "Yank Line" })
 
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete to unregister" })
-vim.keymap.set({ "n", "v" }, "<leader>x", '"_x', { desc = "Delete under cursor to unregister" })
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete (No Register)" })
+vim.keymap.set({ "n", "v" }, "<leader>x", '"_x', { desc = "Delete Char (No Register)" })
 
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz", { desc = "Next Quickfix" })
+vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz", { desc = "Prev Quickfix" })
 
 -- better indenting
+vim.keymap.set("v", "<Tab>", ">gv", { desc = "Indent", silent = true })
+vim.keymap.set("v", ">", ">gv", { desc = "Indent", silent = true })
 
-vim.keymap.set("v", "<Tab>", ">gv", { desc = "+ indent", silent = true })
-vim.keymap.set("v", ">", ">gv", { desc = "+ indent", silent = true })
-
-vim.keymap.set("v", "<S-Tab>", "<gv", { desc = "- indent", silent = true })
-vim.keymap.set("v", "<", "<gv", { desc = "- indent", silent = true })
+vim.keymap.set("v", "<S-Tab>", "<gv", { desc = "Dedent", silent = true })
+vim.keymap.set("v", "<", "<gv", { desc = "Dedent", silent = true })
 
 -- nohl
 vim.keymap.set("n", "<Esc>", "<cmd>:nohlsearch<cr>")
@@ -58,4 +55,9 @@ vim.keymap.set("n", "<leader>fyp", function()
 	local path = vim.fn.expand("%")
 	vim.fn.setreg("+", path)
 	vim.notify("Copied: " .. path)
-end, { desc = "Copy relative file (P)ath" })
+end, { desc = "Copy File Path" })
+
+-- Marks: mm/mM to set (built-in), mj/mJ to jump, ' unified with `
+vim.keymap.set({ "n", "x", "o" }, "'", "`", { remap = true })
+vim.keymap.set("n", "mj", "`m", { desc = "Jump to Local Mark" })
+vim.keymap.set("n", "mJ", "`M", { desc = "Jump to Global Mark" })

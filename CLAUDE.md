@@ -18,7 +18,8 @@ lua/
     autocmds.lua     # autocommands
   plugins/
     mini-nvim.lua    # all mini.nvim modules (including mini.keymap for insert-mode keys)
-    lsp.lua          # LSP (mason + nvim-lspconfig) + conform formatters
+    lsp.lua          # LSP servers (mason + nvim-lspconfig)
+    formatting.lua   # conform.nvim formatters
     treesitter.lua   # treesitter parsers + nvim-ts-autotag
     fzf.lua          # fzf-lua finder
     colorscheme.lua  # tokyonight

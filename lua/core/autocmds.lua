@@ -28,27 +28,6 @@ vim.api.nvim_create_autocmd("FileChangedShellPost", {
 	end,
 })
 
-local function watch_file(path)
-	local w = vim.loop.new_fs_event()
-	w:start(
-		path,
-		{},
-		vim.schedule_wrap(function()
-			vim.cmd("checktime")
-		end)
-	)
-end
-
-vim.api.nvim_create_autocmd("BufReadPost", {
-	pattern = "*",
-	callback = function()
-		local f = vim.fn.expand("<afile>:p")
-		if vim.fn.filereadable(f) == 1 then
-			watch_file(f)
-		end
-	end,
-})
-
 vim.api.nvim_create_autocmd("FileChangedShell", {
 	pattern = "*",
 	callback = function()

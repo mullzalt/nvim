@@ -1,7 +1,7 @@
 return {
 	{
 		"williamboman/mason.nvim",
-		keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+		keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Open Mason" } },
 		build = ":MasonUpdate",
 		opts_extend = { "ensure_installed" },
 		opts = {
@@ -44,10 +44,10 @@ return {
 			vim.diagnostic.config({
 				signs = {
 					text = {
-						[vim.diagnostic.severity.ERROR] = " ",
-						[vim.diagnostic.severity.WARN] = " ",
-						[vim.diagnostic.severity.HINT] = " ",
-						[vim.diagnostic.severity.INFO] = " ",
+						[vim.diagnostic.severity.ERROR] = " ",
+						[vim.diagnostic.severity.WARN] = " ",
+						[vim.diagnostic.severity.HINT] = " ",
+						[vim.diagnostic.severity.INFO] = " ",
 					},
 				},
 				underline = true,
@@ -70,7 +70,6 @@ return {
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 				callback = function(ev)
-					-- Enable completion triggered by <c-x><c-o>
 					vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
 					local opts = function(str)
@@ -81,17 +80,13 @@ return {
 					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts("Goto Declaration"))
 					vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts("Goto Definition"))
 					vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts("Goto Implementation"))
-					vim.keymap.set("n", "gr", vim.lsp.buf.references, opts("Buffer References"))
+					vim.keymap.set("n", "gr", vim.lsp.buf.references, opts("Goto References"))
 					vim.keymap.set("n", "<M-k>", vim.lsp.buf.signature_help, opts("Signature Help"))
 					vim.keymap.set("i", "<M-k>", vim.lsp.buf.signature_help, opts("Signature Help"))
 					vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, opts("Code Rename"))
 					vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts("Code Action"))
 
-					vim.keymap.set("n", "<leader>t", vim.diagnostic.open_float, opts("Open diagnostics"))
-
-					-- vim.keymap.set('n', '<leader>cf', function()
-					--   vim.lsp.buf.format { async = true }
-					-- end, opts("Code Format Buffer"))
+					vim.keymap.set("n", "<leader>t", vim.diagnostic.open_float, opts("Open Diagnostics"))
 				end,
 			})
 
@@ -196,68 +191,6 @@ return {
 					"php",
 				},
 			})
-		end,
-	},
-
-	{
-		"stevearc/conform.nvim",
-		event = { "BufWritePre" },
-		config = function()
-			require("conform").setup({
-				format_on_save = {
-					timeout_ms = 1000,
-					lsp_fallback = false,
-				},
-				formatters = {
-					["markdown-toc"] = {
-						condition = function(_, ctx)
-							for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
-								if line:find("<!%-%- toc %-%->") then
-									return true
-								end
-							end
-						end,
-					},
-					["markdownlint-cli2"] = {
-						condition = function(_, ctx)
-							local diag = vim.tbl_filter(function(d)
-								return d.source == "markdownlint"
-							end, vim.diagnostic.get(ctx.buf))
-							return #diag > 0
-						end,
-					},
-					["php-cs-fixer"] = {
-						command = "php-cs-fixer",
-						args = {
-							"fix",
-							"--rules=@PSR12", -- Formatting preset. Other presets are available, see the php-cs-fixer docs.
-							"$FILENAME",
-						},
-						stdin = false,
-					},
-				},
-				formatters_by_ft = {
-					["markdown"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
-					["markdown.mdx"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
-					lua = { "stylua" },
-					blade = { "blade-formatter" },
-					php = { "php-cs-fixer" },
-
-					javascript = { "prettier" },
-					javascriptreact = { "prettier" },
-					typescript = { "prettier" },
-					typescriptreact = { "prettier" },
-
-					html = { "prettier" },
-					css = { "prettier" },
-					scss = { "prettier" },
-					json = { "prettier" },
-				},
-			})
-
-			vim.keymap.set({ "n", "v" }, "<leader>cf", function()
-				require("conform").format({ async = true })
-			end, { desc = "Code Format buffer" })
 		end,
 	},
 }

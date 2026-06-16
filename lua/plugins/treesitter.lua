@@ -1,6 +1,5 @@
 return {
 	{
-
 		"nvim-treesitter/nvim-treesitter",
 		event = { "BufReadPre", "BufNewFile" },
 		build = ":TSUpdate",
@@ -53,21 +52,12 @@ return {
 				},
 				filetype = "blade",
 			}
-
-			vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-				pattern = "*.blade.php",
-				group = bladeGrp,
-				callback = function()
-					vim.opt.filetype = "blade"
-				end,
-			})
 		end,
 	},
 
 	{
 		"windwp/nvim-ts-autotag",
-		opts = {},
-		setup = {
+		opts = {
 			aliases = {
 				["php"] = "html",
 			},

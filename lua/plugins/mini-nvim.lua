@@ -125,7 +125,6 @@ return {
 		"nvim-mini/mini.clue",
 		version = false,
 		config = function()
-			require("mini.completion").setup()
 			local miniclue = require("mini.clue")
 			miniclue.setup({
 				triggers = {
