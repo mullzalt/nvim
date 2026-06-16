@@ -144,6 +144,7 @@ return {
 					-- Marks
 					{ mode = { "n", "x" }, keys = "'" },
 					{ mode = { "n", "x" }, keys = "`" },
+					{ mode = "n", keys = "m" },
 
 					-- Registers
 					{ mode = { "n", "x" }, keys = '"' },
@@ -161,6 +162,7 @@ return {
 					{ mode = { "n", "x" }, keys = "<leader>f", desc = "Find" },
 					{ mode = { "n", "x" }, keys = "<leader>w", desc = "Wrapping" },
 					{ mode = { "n", "x" }, keys = "<leader>c", desc = "Code" },
+					{ mode = { "n", "x" }, keys = "<leader>s", desc = "Sessions" },
 					miniclue.gen_clues.square_brackets(),
 					miniclue.gen_clues.builtin_completion(),
 					miniclue.gen_clues.g(),
@@ -173,6 +175,82 @@ return {
 					delay = 300,
 				},
 			})
+		end,
+	},
+	{
+		"nvim-mini/mini.indentscope",
+		version = false,
+		config = function()
+			require("mini.indentscope").setup({
+				symbol = "│",
+				options = { try_as_border = true },
+			})
+		end,
+	},
+	{
+		"nvim-mini/mini.hipatterns",
+		version = false,
+		config = function()
+			local hipatterns = require("mini.hipatterns")
+			hipatterns.setup({
+				highlighters = {
+					fixme     = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
+					hack      = { pattern = "%f[%w]()HACK()%f[%W]",  group = "MiniHipatternsHack"  },
+					todo      = { pattern = "%f[%w]()TODO()%f[%W]",  group = "MiniHipatternsTodo"  },
+					note      = { pattern = "%f[%w]()NOTE()%f[%W]",  group = "MiniHipatternsNote"  },
+					hex_color = hipatterns.gen_highlighter.hex_color(),
+				},
+			})
+		end,
+	},
+	{
+		"nvim-mini/mini.cursorword",
+		version = false,
+		config = function()
+			require("mini.cursorword").setup({})
+		end,
+	},
+	{
+		"nvim-mini/mini.sessions",
+		version = false,
+		config = function()
+			require("mini.sessions").setup({ autowrite = true })
+			vim.keymap.set("n", "<leader>ss", function()
+				MiniSessions.write(vim.fn.fnamemodify(vim.fn.getcwd(), ":t"))
+			end, { desc = "Save Session" })
+			vim.keymap.set("n", "<leader>sl", function()
+				MiniSessions.select()
+			end, { desc = "Load Session" })
+		end,
+	},
+	{
+		"nvim-mini/mini.move",
+		version = false,
+		config = function()
+			local move = require("mini.move")
+			move.setup({
+				mappings = {
+					left       = "<M-h>",
+					right      = "<M-l>",
+					down       = "J",
+					up         = "K",
+					line_left  = "<M-h>",
+					line_right = "<M-l>",
+					line_down  = "<M-j>",
+					line_up    = "<M-k>",
+				},
+			})
+			-- Arrow aliases for arrow-based navigation layouts (Alt and Shift variants)
+			for _, mod in ipairs({ "<M-%s>", "<S-%s>" }) do
+				vim.keymap.set("v", mod:format("Left"),  function() move.move_selection("left")  end, { desc = "Move Selection Left" })
+				vim.keymap.set("v", mod:format("Right"), function() move.move_selection("right") end, { desc = "Move Selection Right" })
+				vim.keymap.set("v", mod:format("Down"),  function() move.move_selection("down")  end, { desc = "Move Selection Down" })
+				vim.keymap.set("v", mod:format("Up"),    function() move.move_selection("up")    end, { desc = "Move Selection Up" })
+				vim.keymap.set("n", mod:format("Left"),  function() move.move_line("left")  end, { desc = "Move Line Left" })
+				vim.keymap.set("n", mod:format("Right"), function() move.move_line("right") end, { desc = "Move Line Right" })
+				vim.keymap.set("n", mod:format("Down"),  function() move.move_line("down")  end, { desc = "Move Line Down" })
+				vim.keymap.set("n", mod:format("Up"),    function() move.move_line("up")    end, { desc = "Move Line Up" })
+			end
 		end,
 	},
 	{

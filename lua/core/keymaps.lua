@@ -1,15 +1,8 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- move line in visual mode
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move Line Down", silent = true })
-vim.keymap.set("v", "<S-Down>", ":m '>+1<CR>gv=gv", { desc = "Move Line Down", silent = true })
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move Line Up", silent = true })
-vim.keymap.set("v", "<S-Up>", ":m '<-2<CR>gv=gv", { desc = "Move Line Up", silent = true })
-
 -- join line
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join Line", silent = true })
-vim.keymap.set("n", "<S-Down>", "mzJ`z", { desc = "Join Line", silent = true })
 
 -- better scroll
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll Down", silent = true })
