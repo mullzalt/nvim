@@ -163,6 +163,7 @@ return {
 					{ mode = { "n", "x" }, keys = "<leader>w", desc = "Wrapping" },
 					{ mode = { "n", "x" }, keys = "<leader>c", desc = "Code" },
 					{ mode = { "n", "x" }, keys = "<leader>s", desc = "Sessions" },
+					{ mode = { "n", "x" }, keys = "<leader>g", desc = "Git" },
 					miniclue.gen_clues.square_brackets(),
 					miniclue.gen_clues.builtin_completion(),
 					miniclue.gen_clues.g(),

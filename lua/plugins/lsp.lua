@@ -63,10 +63,6 @@ return {
 				},
 			})
 
-			local lspconfig = require("lspconfig")
-
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
-
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 				callback = function(ev)
@@ -90,14 +86,17 @@ return {
 				end,
 			})
 
-			lspconfig.lua_ls.setup({
-				capabilities = capabilities,
+			-- Set capabilities globally for all servers
+			vim.lsp.config("*", {
+				capabilities = vim.lsp.protocol.make_client_capabilities(),
+			})
+
+			-- Server-specific overrides
+			vim.lsp.config("lua_ls", {
 				settings = {
 					Lua = {
 						runtime = { version = "LuaJIT" },
-						diagnostics = {
-							globals = { "vim" },
-						},
+						diagnostics = { globals = { "vim" } },
 						workspace = {
 							library = vim.api.nvim_get_runtime_file("", true),
 							checkThirdParty = false,
@@ -107,8 +106,7 @@ return {
 				},
 			})
 
-			lspconfig.vtsls.setup({
-				capabilities = capabilities,
+			vim.lsp.config("vtsls", {
 				settings = {
 					typescript = {
 						inlayHints = {
@@ -122,74 +120,37 @@ return {
 				},
 			})
 
-			lspconfig.jsonls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.tailwindcss.setup({
-				capabilities = capabilities,
+			vim.lsp.config("tailwindcss", {
 				filetypes = {
-					"html",
-					"css",
-					"scss",
-					"javascript",
-					"javascriptreact",
-					"typescript",
-					"typescriptreact",
+					"html", "css", "scss",
+					"javascript", "javascriptreact",
+					"typescript", "typescriptreact",
 				},
 			})
 
-			lspconfig.html.setup({
-				capabilities = capabilities,
+			vim.lsp.config("html", {
 				filetypes = { "html", "blade" },
 			})
 
-			lspconfig.cssls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.emmet_ls.setup({
-				capabilities = capabilities,
+			vim.lsp.config("emmet_ls", {
 				filetypes = {
-					"html",
-					"css",
-					"scss",
-					"javascriptreact",
-					"typescriptreact",
+					"html", "css", "scss",
+					"javascriptreact", "typescriptreact",
 				},
 			})
 
-			lspconfig.marksman.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.tinymist.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.blade_formatter.setup({
-				capabilities = capabilities,
-				filetypes = {
-					"blade",
-				},
-			})
-
-			lspconfig.phpstan.setup({
-				cmd = {
-					"vendor/bin/phpstan",
-					"analyse",
-					"--error-format=json",
-					"--no-progress",
-				},
-				filetypes = { "php" },
-				root_dir = lspconfig.util.root_pattern("composer.json", "phpstan.neon", ".git"),
-			})
-
-			lspconfig.intelephense.setup({
-				capabilities = capabilities,
-				filetypes = {
-					"php",
-				},
+			vim.lsp.enable({
+				"lua_ls",
+				"vtsls",
+				"jsonls",
+				"tailwindcss",
+				"html",
+				"cssls",
+				"emmet_ls",
+				"marksman",
+				"tinymist",
+				"intelephense",
+				"typos_lsp",
 			})
 		end,
 	},

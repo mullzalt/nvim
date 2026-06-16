@@ -56,6 +56,12 @@ vim.keymap.set("n", "<leader>cP", function()
 	vim.notify("Copied: " .. path)
 end, { desc = "Copy Absolute Path" })
 
+-- LSP
+vim.keymap.set("n", "<leader>cR", "<cmd>LspRestart<cr>", { desc = "Restart LSP" })
+
+-- Git
+vim.keymap.set("n", "<leader>gd", function() MiniDiff.toggle_overlay() end, { desc = "Toggle Diff Overlay" })
+
 -- Marks: mm/mM to set (built-in), mj/mJ to jump, ' unified with `
 vim.keymap.set({ "n", "x", "o" }, "'", "`", { remap = true })
 vim.keymap.set("n", "mj", "`m", { desc = "Jump to Local Mark" })
