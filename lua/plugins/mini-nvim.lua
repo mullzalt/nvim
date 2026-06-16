@@ -104,35 +104,12 @@ return {
 		end,
 	},
 	{
-		"nvim-mini/mini.snippets",
-		version = false,
-		config = function()
-			require("mini.snippets").setup()
-		end,
-	},
-	{
 		"nvim-mini/mini.keymap",
 		version = false,
 		config = function()
 			local map_multistep = require("mini.keymap").map_multistep
-			map_multistep("i", "<Tab>", {
-				"minisnippets_next",
-				"minisnippets_expand",
-				{
-					condition = function()
-						if vim.fn.pumvisible() ~= 1 then
-							return false
-						end
-						local info = vim.fn.complete_info({ "items", "selected" })
-						return #info.items == 1 and info.selected ~= -1
-					end,
-					action = function()
-						return "<C-y>"
-					end,
-				},
-				"pmenu_next",
-			})
-			map_multistep("i", "<S-Tab>", { "minisnippets_prev", "pmenu_prev" })
+			map_multistep("i", "<Tab>", { "pmenu_next" })
+			map_multistep("i", "<S-Tab>", { "pmenu_prev" })
 			map_multistep("i", "<CR>", { "pmenu_accept", "minipairs_cr" })
 			map_multistep("i", "<BS>", { "minipairs_bs" })
 		end,
