@@ -108,5 +108,21 @@ return {
 			end,
 			desc = "Find Marks",
 		},
+		{
+			"<leader>fo",
+			function()
+				require("fzf-lua").fzf_exec("fd --type d --hidden --exclude .git", {
+					prompt = "Open Dir> ",
+					actions = {
+						["default"] = function(selected)
+							if selected and selected[1] then
+								require("oil").open(vim.fn.fnamemodify(selected[1], ":p"))
+							end
+						end,
+					},
+				})
+			end,
+			desc = "Find and Open Directory",
+		},
 	},
 }
